@@ -1,113 +1,127 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import { useMotionValueEvent, useScroll, useSpring } from "framer-motion";
+import Button from "./_component/button";
 
-export default function Home() {
+const ScrollButton = () => {
+  const [y, setY] = useState<number>(0);
+  const { scrollY }: { scrollY: any } = useScroll();
+  const { scrollYProgress }: { scrollYProgress: any } = useScroll();
+  const scaleY: any = useSpring(scrollYProgress);
+  const max = 645;
+  const scroll: any = useSpring(scrollY, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  useMotionValueEvent(scroll, "change", (latest) => {
+    setY(scaleY.current);
+  });
+  let top = scroll.current > max ? max : scroll.current;
+  let top1 = scroll.current < max ? 0 : scroll.current - max;
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className=" bg-gray-200 flex flex-col">
+      <div className=" pl-[270px] pt-32">
+        <div className="text-[62px] w-[53%] font-bold leading-[70px]">
+          First U.S. institutional asset manager focused exclusively on
+          blockchain technology.
+        </div>
+        <div className="text-[20px] w-[66%] pt-12">
+          Since 2013, Pantera has invested in digital assets and blockchain
+          compaines, providing investors with the full spectrum of exposure to
+          the space.
+        </div>
+        <div className="flex gap-10 pt-10">
+          <Button top={top} speed={0.1}>
+            FUNDS
+          </Button>
+          <Button top={top} speed={0.175}>
+            PORTFOLIO
+          </Button>
+          <Button top={top} speed={0.25}>
+            INSIGHTS
+          </Button>
         </div>
       </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className="text-white px-[230px] py-[100px] flex ">
+        <div
+          className="pt-[600px]  w-[50%]"
+          style={{
+            translate: `0px -${top1}px`,
+          }}
+        >
+          <div className="bg-black flex flex-col p-14 ">
+            <div className="text-[70px] font-bold leading-[80px]">
+              Pantera at glance<sup>1</sup>
+            </div>
+            <div className="flex justify-between pt-10">
+              <div>
+                <div className="text-yellow-600  text-center text-[25px]">
+                  $5.1bn
+                </div>
+                <div className="text-white text-center">
+                  Assets Under Management
+                </div>
+              </div>
+              <div>
+                <div className="text-yellow-600  text-center text-[25px]">
+                  3
+                </div>
+                <div className="text-white text-center">Found Strategies</div>
+              </div>
+              <div>
+                <div className="text-yellow-600  text-center text-[25px]">
+                  75%
+                </div>
+                <div className="text-white text-center">
+                  Deals Led (Blockchain Fund)
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between pt-10 pb-[80px]">
+              <div>
+                <div className="text-yellow-600  text-center text-[25px]">
+                  $5.1bn
+                </div>
+                <div className="text-white text-center">
+                  Assets Under Management
+                </div>
+              </div>
+              <div>
+                <div className="text-yellow-600  text-center text-[25px]">
+                  3
+                </div>
+                <div className="text-white text-center">Found Strategies</div>
+              </div>
+              <div>
+                <div className="text-yellow-600  text-center text-[25px]">
+                  75%
+                </div>
+                <div className="text-white text-center">
+                  Deals Led (Blockchain Fund)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[50%]" style={{ translate: `0px ${top * 0.17}px` }}>
+          <div className="bg-black flex flex-col justify-center items-center py-[170px] px-[70px]">
+            <div className="text-[40px] font-bold">A history of firsts</div>
+            <div className="text-[15px] p-[20px]">
+              Pantera launched the first cryptocurrency fund in the U.S. when
+              bitcoin was at $65 /BTC in 2013. The firm subsequently launched
+              the first blockchain-focused venture fund. In 2017, Pantera was
+              the first to offer an early-stage token fund.
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
-}
+};
+
+export default ScrollButton;

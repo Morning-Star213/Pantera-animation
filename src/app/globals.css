@@ -31,3 +31,15 @@ body {
     text-wrap: balance;
   }
 }
+.btn3{
+  color: black;
+  background-color: white;
+  border: black solid 1px;
+  /* position: fixed; */
+  width: 150px;
+  height: 40px;
+  font-size: 14px;
+  transition-duration: 500ms;
+  transition: all;
+  animation-delay: 5000ms;
+}
