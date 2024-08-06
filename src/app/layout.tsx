@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import dynamic from "next/dynamic";
-const JotaiProvider = dynamic(() => import("@/providers/jotaiProvider"), {
-  ssr: false,
-});
+// import dynamic from "next/dynamic";
+// const JotaiProvider = dynamic(() => import("@/providers/jotaiProvider"), {
+//   ssr: false,
+// });
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-800 h-[100vh]`}>
-        <JotaiProvider>{children}</JotaiProvider>
+        {children}
       </body>
     </html>
   );
